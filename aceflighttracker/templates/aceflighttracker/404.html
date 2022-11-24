@@ -1,0 +1,15 @@
+{% extends 'error.html' %}
+{% load static %}
+
+{% block title %}
+<title>404 Error - AFT Admin</title>
+{% endblock title %}
+        
+{% block message %}
+<img class="mb-4 img-error" src={% static "assets/img/error-404-monochrome.svg"%} />
+<p class="lead">This requested URL was not found on this server.</p>
+<a href={% url "index"%}>
+    <i class="fas fa-arrow-left me-1"></i>
+    Return to Dashboard
+</a>
+{% endblock message %}

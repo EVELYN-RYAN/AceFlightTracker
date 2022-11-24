@@ -1,0 +1,15 @@
+{% extends 'error.html' %}
+{% load static %}
+
+{% block title %}
+<title>500 Error - AFT Admin</title>
+{% endblock title %}
+        
+{% block message %}
+<h1 class="display-1">500</h1>
+<p class="lead">Internal Server Error</p>
+<a href={% url "index"%}>
+    <i class="fas fa-arrow-left me-1"></i>
+    Return to Dashboard
+</a>
+{% endblock message %}
