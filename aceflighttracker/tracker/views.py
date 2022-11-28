@@ -4,7 +4,11 @@ from .models import Flight
 
 # Create your views here.
 def indexPageView(request):
-    return render(request, 'aceflighttracker/index.html')
+    flight = Flight.objects.all().order_by('-flightid')
+    context ={
+        'flight': flight
+    }
+    return render(request, 'aceflighttracker/index.html',context)
 
 def punchclockPageView(request):
     return render(request, 'aceflighttracker/punchclock.html')
@@ -28,16 +32,11 @@ def registerPageView(request):
     return render(request,'aceflighttracker/register.html')
 
 def entriesPageView(request):
-    return render(request,'aceflighttracker/entries.html')
+    flight = Flight.objects.all().order_by('-flightid')
+    context = {
+        'flight': flight
+    }
+    return render(request,'aceflighttracker/entries.html',context)
 
 def chartsPageView(request):
     return render(request,'aceflighttracker/charts.html')
-
-class HoursChartView(DetailView):
-    template_name = 'components/hoursGraph.html'
-    model = Flight
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['qs'] = Flight.objects.all()
-        return context

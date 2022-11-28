@@ -34,3 +34,9 @@ class Flight(models.Model):
     class Meta:
         managed = False
         db_table = 'Flight'
+    
+    def __str__(self):
+        return "{}-{}".format(self.flightid, self.date, self.days, self.flightnum, self.aircraftid,
+        self.from_field, self.to, self.out, self.off, self.on, self.in_field, self.total, 
+        self.night, self.imc, self.pilotflying, self.approachtype, self.dayt_o, self.dayldg, self.nightt_o, self.nightldg,
+        self.remarks)

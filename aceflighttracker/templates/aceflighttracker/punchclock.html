@@ -12,6 +12,20 @@
             <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
             <li class="breadcrumb-item active">Punch Clock</li>
         </ol>
+        <div class="card mb-4">
+            <div class="card-header">
+                <i class="fa-solid fa-stopwatch"></i>
+                Clock New Entry
+            </div>
+            {% comment %} I was thinking here we do a post method that submits 
+            the first time as a new entry but circles around to this page with 
+            the flightid ready for when the pilot clocks out {% endcomment %}
+            <form method="post">
+                <a href=""><div>Clock-In</div></a>
+                <a href=""><div>Clock-In</div></a>
+            </form>
+        </div>
     </div>
 </main>
+
 {% endblock main %}
