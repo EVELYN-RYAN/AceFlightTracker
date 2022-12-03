@@ -48,9 +48,13 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Dashboard
                             </a>
-                            <a class="nav-link" href={% url 'punchclock' %}>
-                                <div class="sb-nav-link-icon"><i class="fa-solid fa-stopwatch"></i></div>
-                                Punch Clock
+                            <a class="nav-link" href={% url 'new-entry' %}>
+                                <div class="sb-nav-link-icon"><i class="fa-solid fa-plus"></i></div>
+                                New Entry
+                            </a>
+                            <a class="nav-link" href={% url 'incomplete-entries' %}>
+                                <div class="sb-nav-link-icon"><i class="fa-solid fa-list"></i></div>
+                                Incomplete Entries
                             </a>
                             {% comment %} <div class="sb-sidenav-menu-heading">Interface</div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">

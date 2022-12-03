@@ -3,7 +3,8 @@ from .views import *
 
 urlpatterns = [
     path("", indexPageView, name="index"),
-    path("punchclock", punchclockPageView, name="punchclock"),
+    path("new-entry", newentryPageView, name="new-entry"),
+    path("incomplete-entries", incompletePageView, name="incomplete-entries"),
     path("401", unauthorizedPageView, name='401'),
     path("404", errorPageView, name='404'),
     path("500", serverPageView, name='500'),

@@ -10,8 +10,15 @@ def indexPageView(request):
     }
     return render(request, 'aceflighttracker/index.html',context)
 
-def punchclockPageView(request):
-    return render(request, 'aceflighttracker/punchclock.html')
+def newentryPageView(request):
+    return render(request, 'aceflighttracker/new-entry.html')
+
+def incompletePageView(request):
+    incomplete_list = Flight.objects.filter(to = None)
+    context ={
+        'flight': incomplete_list
+    }
+    return render(request, 'aceflighttracker/incomplete-entries.html',context)
 
 def unauthorizedPageView(request):
     return render(request,'aceflighttracker/401.html')

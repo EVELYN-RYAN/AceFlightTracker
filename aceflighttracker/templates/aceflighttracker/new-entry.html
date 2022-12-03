@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>New Entry - AFT</title>
+{% endblock title %}
+
+{% block main %}
+<main>
+    <div class="container-fluid px-4">
+        <h1 class="mt-4">New Entry</h1>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item"><a href="{%url 'index'%}">Dashboard</a></li>
+            <li class="breadcrumb-item active">New Entry</li>
+        </ol>
+        <div class="card mb-4">
+            <div class="card-header">
+                <i class="fa-solid fa-stopwatch"></i>
+                Clock New Entry
+            </div>
+            {% comment %} I was thinking here we do a post method that submits 
+            the first time as a new entry but circles around to this page with 
+            the flightid ready for when the pilot clocks out {% endcomment %}
+            <form method="post">
+                <label for="flightid"></label>
+                <input name="flightid" type="text">
+                <label for="date"></label>
+                <input type="datetime" name="date" id="">
+                <label for="days"></label>
+                <input type="button" name="days" value=+1>
+                <input type="text">
+                <input type="radio" name="dayt_o" id="">
+                <input type="radio" name="dayldg" id="">
+                <input type="radio" name="nightt_o" id="">
+                <input type="radio" name="nightldg" id="">
+                <label for="remarks"></label>
+                <input name="remarks" type="text">
+            </form>
+        </div>
+    </div>
+</main>
+
+{% endblock main %}
