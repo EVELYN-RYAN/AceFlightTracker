@@ -3,13 +3,14 @@
     DataTable Example
 </div>
 <div class="card-body">
-    <table id="datatablesSimple">
+    <table id="datatablesSimple" >
         <thead>
             <tr>
+                <th></th>
                 <th>Date</th>
-                <th>Date</th>
+                <th>Days</th>
                 <th>FlightNum</th>
-                <th>FlightNum</th>
+                <th>Aircraft Id</th>
                 <th>From</th>
                 <th>To</th>
                 <th>Out</th>
@@ -30,10 +31,11 @@
         </thead>
         <tfoot>
             <tr>
+                <th></th>
                 <th>Date</th>
-                <th>Date</th>
+                <th>Days</th>
                 <th>FlightNum</th>
-                <th>FlightNum</th>
+                <th>Aircraft Id</th>
                 <th>From</th>
                 <th>To</th>
                 <th>Out</th>
@@ -54,8 +56,10 @@
         </tfoot>
         <tbody>
             {% for flight in flight %}
+            {% comment %} <tr ondbclick="{% url 'update-flight' flightid=flight.flightid %}"> {% endcomment %}
             <tr>
                 {% comment %} <td sty>{{flight.flightid}}</td> {% endcomment %}
+                <td><a href={% url 'delete-flight' flightid=flight.flightid %}>delete</a></td>
                 <td>{{flight.date}}</td>
                 <td>{{flight.days}}</td>
                 <td>{{flight.flightnum}}</td>
@@ -81,3 +85,5 @@
         </tbody>
     </table>
 </div>
+{% block script %}
+{% endblock script %}

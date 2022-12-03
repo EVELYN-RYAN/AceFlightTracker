@@ -1,9 +1,7 @@
 {% extends 'base.html' %}
-
 {% block title %}
 <title>New Entry - AFT</title>
 {% endblock title %}
-
 {% block main %}
 <main>
     <div class="container-fluid px-4">
@@ -20,20 +18,116 @@
             {% comment %} I was thinking here we do a post method that submits 
             the first time as a new entry but circles around to this page with 
             the flightid ready for when the pilot clocks out {% endcomment %}
-            <form method="post">
-                <label for="flightid"></label>
-                <input name="flightid" type="text">
-                <label for="date"></label>
-                <input type="datetime" name="date" id="">
-                <label for="days"></label>
-                <input type="button" name="days" value=+1>
-                <input type="text">
-                <input type="radio" name="dayt_o" id="">
-                <input type="radio" name="dayldg" id="">
-                <input type="radio" name="nightt_o" id="">
-                <input type="radio" name="nightldg" id="">
-                <label for="remarks"></label>
-                <input name="remarks" type="text">
+            <form name="newflight" method="post" action="{% url 'update-flight' flightid=new.flightid %}">
+                {% csrf_token %}
+                <input type="hidden" value="{{new.flightid}}">
+                <div class="form-group">
+                    <label class="control-label" for="date">Date</label>
+                    <input name="date" class="form-control mr-sm-2" type="date" value="{{new.date}}"style="max-width: 40rem;">
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <div class="form-group">
+                    <label class="control-label" for="days">Days</label>
+                    <input name="days" class="form-control mr-sm-2" type="number" value={{flight.days}} >
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="flightnum">Flight number</label>
+                    <input name="flightnum" class="form-control mr-sm-2" type="text" value={{flight.flightnum}}>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="aircraftid">Aircraft ID</label>
+                    <input name="aircraftid" class="form-control mr-sm-2" type="text" value={{flight.aircraftid}}>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="from_field">From</label>
+                    <input name="from_field" class="form-control mr-sm-2" type="text" value={{flight.from_field}}>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="to">To</label>
+                    <input name="to" class="form-control mr-sm-2" type="text" value={{flight.to}}>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="out">Out</label>
+                    <input name="out" class="form-control mr-sm-2" type="time" value={{flight.out}}>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="off">Off</label>
+                    <input name="off" class="form-control mr-sm-2" type="time" value={{flight.off}}>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="on">On</label>
+                    <input name="on" class="form-control mr-sm-2" type="time" value={{flight.on}}>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="in_field">In</label>
+                    <input name="in_field" class="form-control mr-sm-2" type="time" value={{flight.in_field}}>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="total">Total</label>
+                    <input name="total" class="form-control mr-sm-2" type="number" value={{flight.total}}>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="night">Night</label>
+                    <input name="night" class="form-control mr-sm-2" type="number" value={{flight.night}}>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="imc">IMC</label>
+                    <input name="imc" class="form-control mr-sm-2" type="number" value={{flight.imc}}>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="approachtype">Approach Type</label>
+                    <input name="approachtype" class="form-control mr-sm-2" type="text" value={{flight.approachtype}}>
+                </div>
+                <div class="form-inline">
+                    
+                    <input name="pilotflying" class="form-check-input" type="hidden" value="0">
+                    {% if flight.pilotflying == 1 %}
+                    <input name="pilotflying" class="form-check-input" type="checkbox" value="1" checked>
+                    {% else %}
+                    <input name="pilotflying" class="form-check-input" type="checkbox" value="1">
+                    {% endif %}
+                    <label class="form-check-label" for="pilotflying">Pilot flying</label>
+                </div>
+                <div class="">
+                    <input name="dayt_o" class="form-check-input" type="hidden" value="0">
+                    {% if flight.dayt_o == 1 %}
+                    <input name="dayt_o" class="form-check-input" type="checkbox" value="1" checked>
+                    {% else %}
+                    <input name="dayt_o" class="form-check-input" type="checkbox" value="1">
+                    {% endif %}
+                    <label class="form-check-label" for="dayt_o">Day takeoff</label>
+                </div>
+                <div class="">
+                    <input name="dayldg" class="form-check-input" type="hidden"value="0">
+                    {% if flight.dayldg == 1 %}
+                    <input name="dayldg" class="form-check-input" type="checkbox" value="1" checked>
+                    {% else %}
+                    <input name="dayldg" class="form-check-input" type="checkbox" value="1">
+                    {% endif %}
+                    <label class="form-check-label" for="dayldg">Day landing</label>
+                </div>
+                <div class="">
+                    <input name="nightt_o" class="form-check-input" type="hidden" value="0">
+                    {% if flight.nightt_o == 1 %}
+                    <input name="nightt_o" class="form-check-input" type="checkbox" value="1" checked>
+                    {% else %}
+                    <input name="nightt_o" class="form-check-input" type="checkbox" value="1">
+                    {% endif %}
+                    <label class="form-check-label" for="nightt_o">Night takeoff</label>
+                </div>
+                <div class="">
+                    <input name="nightldg" class="form-check-input" type="hidden" value="0">
+                    {% if flight.nightldg == 1 %}
+                    <input name="nightldg" class="form-check-input" type="checkbox" value="1" checked>
+                    {% else %}
+                    <input name="nightldg" class="form-check-input" type="checkbox" value="1">
+                    {% endif %}
+                    <label class="form-check-label" for="nightldg">Night landing</label>
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="remarks">Remarks</label>
+                    <input name="remarks" class="form-control mr-sm-2" type="text" value={{flight.remarks}}>
+                </div>
             </form>
         </div>
     </div>
