@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.views.generic import TemplateView, DetailView
 from .models import Flight
 from datetime import datetime
+from django.http import HttpResponse
+import csv
 from .functions import *
 
 # Create your views here.
@@ -38,6 +40,7 @@ def passwordPageView(request):
 def registerPageView(request):
     return render(request,'aceflighttracker/register.html')
 
+# ================= ENTRIES RELATED VIEWS =====================
 def entriesPageView(request):
     flight = Flight.objects.all().order_by('-flightid')
     context = {
@@ -45,9 +48,22 @@ def entriesPageView(request):
     }
     return render(request,'aceflighttracker/entries.html',context)
 
+def export_csv(request):
+    flight = Flight.objects.all().order_by('-flightid')
+    r = HttpResponse('')
+    r['Content-Disposition'] = 'attachment; filename=flight_tracker.csv'
+    writer = csv.writer(r)
+    writer.writerow(['FlightId','Date','Days','FlightNum','AircraftId','From','To',
+    'Out','Off','On','In','TOTAL','Night','IMC','PilotFlying','ApproachType','DayT/O','DayLdg','NightT/O','NightLdg','Remarks'])
+    fields = flight.values_list('flightid','date','days','flightnum','aircraftid','from_field','to','out','off','on','in_field','total','night','imc','pilotflying','approachtype','dayt_o','dayldg','nightt_o','nightldg','remarks')
+    for f in fields:
+        writer.writerow(f)
+    return r
+
 def chartsPageView(request):
     return render(request,'aceflighttracker/charts.html')
 
+# ================= CRUD RELATED VIEWS =====================
 def newflight(request):
     new = Flight()
     n = datetime.now()
@@ -101,3 +117,4 @@ def deleteflight(request, flightid):
         flight = Flight.objects.get(flightid=flightid)
         flight.delete()
         return indexPageView(request)
+        #Consider sending the user back the exact page they were on (entries,incomplete,index)

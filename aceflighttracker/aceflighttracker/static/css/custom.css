@@ -1,0 +1,33 @@
+.page-btn {
+    width: 8rem;
+    height: 3rem;
+    position: absolute;
+    z-index: 1;
+    top:5%;
+    left:85%;
+    background-color: rgb(255, 150, 48);
+    border-radius: 10px;
+    text-align: center;
+    border: 1px rgb(154, 154, 154) solid;
+    transition: .25s;
+}
+.page-btn > a {
+    text-decoration: none;
+    color: white;
+    position: relative;
+    top:25%;
+    font-weight:bold;
+}
+.page-btn:hover {
+    transition: .25s;
+    background-color: rgb(255, 191, 126);
+    color: white;
+    border: 2px rgb(237, 237, 237) solid;
+}
+.page-btn > a:hover {
+    color: inherit;
+    text-decoration: inherit;
+}
+a {
+    color: rgb(255, 150, 48);
+}
