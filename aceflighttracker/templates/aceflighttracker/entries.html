@@ -12,9 +12,9 @@
             <li class="breadcrumb-item"><a href={% url 'index'%}>Dashboard</a></li>
             <li class="breadcrumb-item active">Entries</li>
         </ol>
-        <div class="page-btn"> 
-            <a href={% url 'export_csv' %}>Export Table</a>
-        </div>
+        <a href={% url 'export_csv' %} class="page-btn top"> 
+            <span>Export Table</span>
+        </a>
         <div class="card mb-4">
             {% include 'components/table.html' with data=flight %}
         </div>

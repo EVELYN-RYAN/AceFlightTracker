@@ -2,9 +2,12 @@ from django.shortcuts import render
 from django.views.generic import TemplateView, DetailView
 from .models import Flight
 from datetime import datetime
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpRequest, HttpResponseRedirect
+from django.views.decorators.csrf import csrf_protect
+from django.urls import reverse
 import csv
 from .functions import *
+
 
 # Create your views here.
 def indexPageView(request):
@@ -64,11 +67,11 @@ def chartsPageView(request):
     return render(request,'aceflighttracker/charts.html')
 
 # ================= CRUD RELATED VIEWS =====================
+@csrf_protect  
 def newflight(request):
     new = Flight()
     n = datetime.now()
     new.date = n.strftime("%m/%d/%y")
-    new.out = int(n.strftime("%H%M"))
     new.save()
     new.date = n.strftime("%Y-%d-%m")
     # new.out = n.strftime("%HH:%MM")
@@ -76,16 +79,16 @@ def newflight(request):
         'new': new
     }
     return render(request,'aceflighttracker/new-entry.html',context)
-    
+
+@csrf_protect    
 def updateflight(request, flightid):
     if request.method == 'POST':
         r = request.POST
         flight = Flight.objects.get(flightid=flightid)
-
         date = datetime.strptime(r.get('date'),"%Y-%m-%d")
         flight.date = date.strftime("%m/%d/%y")
-        flight.days = int(r.get('days'))
-        flight.flightnum = r.get('flightnum')
+        flight.days = string_to_int(r.get('days'))
+        flight.flightnum = string_to_int(r.get('flightnum'))
         flight.aircraftid = r.get('aircraftid')
         flight.from_field = r.get('from_field')
         flight.to = r.get('to')
@@ -94,9 +97,9 @@ def updateflight(request, flightid):
         flight.on = time_to_integer(r.get('on'))
         flight.in_field = time_to_integer(r.get('in_field'))
         #I would love to know how to calculate total and night
-        flight.total = float(r.get('total'))
-        flight.night = float(r.get('night'))
-        flight.imc = float(r.get('imc'))
+        flight.total = string_to_float(r.get('total'))
+        flight.night = string_to_float(r.get('night'))
+        flight.imc = string_to_float(r.get('imc'))
         flight.pilotflying = int(r.get('pilotflying'))
         flight.approachtype = r.get('approachtype')
         flight.dayt_o = int(r.get('dayt_o'))
@@ -105,16 +108,29 @@ def updateflight(request, flightid):
         flight.nightldg = int(r.get('nightldg'))
         flight.remarks = r.get('remarksflight')
         flight.save()
-        return render(request,'aceflighttracker/submitted.html')
+
+        if 'save' in r:
+            request = HttpRequest()
+            request.method = 'GET'
+            return updateflight(request,flightid)
+        else:
+            return render(request,'aceflighttracker/submitted.html')
     if request.method == 'GET':
         flight = Flight.objects.get(flightid=flightid)
+        d = datetime.strptime(flight.date,"%m/%d/%y")
+        flight.date = d.strftime("%Y-%d-%m")
+        flight.out = int_to_time(flight.out)
+        flight.off = int_to_time(flight.off)
+        flight.on = int_to_time(flight.on)
+        flight.in_field = int_to_time(flight.in_field)
         context = {
             'flight':flight
         }
-        return render(request,'aceflighttracker/update-entry.html')
+        return render(request,'aceflighttracker/update-entry.html',context)
     
 def deleteflight(request, flightid):
+        r = request
         flight = Flight.objects.get(flightid=flightid)
         flight.delete()
-        return indexPageView(request)
-        #Consider sending the user back the exact page they were on (entries,incomplete,index)
+        prev_page = r.environ['HTTP_REFERER']
+        return HttpResponseRedirect(prev_page)

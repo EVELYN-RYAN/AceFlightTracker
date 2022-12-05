@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 {% block title %}
-<title>New Entry - AFT</title>
+<title>Update Entry - AFT</title>
 {% endblock title %}
 {% block main %}
 <main>
     <div class="container-fluid px-4">
-        <h1 class="mt-4">New Entry</h1>
+        <h1 class="mt-4">Update Entry</h1>
         <ol class="breadcrumb mb-4">
             <li class="breadcrumb-item"><a href="{%url 'index'%}">Dashboard</a></li>
-            <li class="breadcrumb-item active">New Entry</li>
+            <li class="breadcrumb-item active">Update Entry</li>
         </ol>
         <div class="">
             <h4>Note</h4>
@@ -17,14 +17,14 @@
         <div class="card mb-4" style="max-width: 28rem;">
             <div class="card-header">
                 <i class="fa-solid fa-stopwatch"></i>
-                Clock New Entry
+                Update Entry
             </div>
-            <form name="newflight" method="post" action="{% url 'update-flight' flightid=new.flightid %}">
+            <form name="updateflight" method="post" action="{% url 'update-flight' flightid=flight.flightid %}#saved">
                 {% csrf_token %}
-                <input type="hidden" value="{{new.flightid}}">
+                <input type="hidden" value="{{flight.flightid}}">
                 <div class="form-group">
                     <label class="control-label" for="date">Date</label>
-                    <input name="date" class="form-control mr-sm-2  input-width" type="date" value="{{new.date}}">
+                    <input name="date" class="form-control mr-sm-2  input-width" type="date" value="{{flight.date}}">
                 </div>
                 <div class="form-group">
                     <label class="control-label" for="days">Days</label>
@@ -129,6 +129,7 @@
                     <label class="control-label" for="remarks">Remarks</label>
                     <input name="remarks" class="form-control mr-sm-2" type="text" style="max-width: 30rem;" value={{flight.remarks}}>
                 </div>
+                <a name="saved"></a>
                 <div class="form-group" style="padding-top:1rem;">
                     <input type="submit" name="save" class="save-btn bottom"><span>Save</span></input>
                     <input type="submit" name="submit" class="page-btn bottom"><span>Submit</span></input>

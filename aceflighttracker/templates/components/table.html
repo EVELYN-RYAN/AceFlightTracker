@@ -6,7 +6,6 @@
     <table id="datatablesSimple" >
         <thead>
             <tr>
-                <th></th>
                 <th>Date</th>
                 <th>Days</th>
                 <th>FlightNum</th>
@@ -27,11 +26,11 @@
                 <th>Night T/O</th>
                 <th>Night Ldg</th>
                 <th>Remarks</th>
+                <th></th>
             </tr>
         </thead>
         <tfoot>
             <tr>
-                <th></th>
                 <th>Date</th>
                 <th>Days</th>
                 <th>FlightNum</th>
@@ -52,38 +51,122 @@
                 <th>Night T/O</th>
                 <th>Night Ldg</th>
                 <th>Remarks</th>
+                <th></th>
             </tr>
         </tfoot>
         <tbody>
             {% for flight in flight %}
-            {% comment %} <tr ondbclick="{% url 'update-flight' flightid=flight.flightid %}"> {% endcomment %}
-            <tr>
-                {% comment %} <td sty>{{flight.flightid}}</td> {% endcomment %}
-                <td><a href={% url 'delete-flight' flightid=flight.flightid %}>delete</a></td>
+            <tr ondblclick="updateRow({{flight.flightid}})">
+                {% if flight.date != None %}
                 <td>{{flight.date}}</td>
+                {% else %}
+                <td></td>
+                {% endif %}
+                {% if flight.days != None %}
                 <td>{{flight.days}}</td>
+                {% else %}
+                <td></td>
+                {% endif %}
+                {% if flight.flightnum != None %}
                 <td>{{flight.flightnum}}</td>
+                {% else %}
+                <td></td>
+                {% endif %}
+                {% if flight.aircraftid != None %}
                 <td>{{flight.aircraftid}}</td>
+                {% else %}
+                <td></td>
+                {% endif %}
+                {% if flight.from_field != None %}
                 <td>{{flight.from_field}}</td>
+                {% else %}
+                <td></td>
+                {% endif %}
+                {% if flight.to != None %}
                 <td>{{flight.to}}</td>
+                {% else %}
+                <td></td>
+                {% endif %}
+                {% if flight.out != None %}
                 <td>{{flight.out}}</td>
+                {% else %}
+                <td></td>
+                {% endif %}
+                {% if flight.off != None %}
                 <td>{{flight.off}}</td>
+                {% else %}
+                <td></td>
+                {% endif %}
+                {% if flight.on != None %}
                 <td>{{flight.on}}</td>
+                {% else %}
+                <td></td>
+                {% endif %}
+                {% if flight.in_field != None %}
                 <td>{{flight.in_field}}</td>
+                {% else %}
+                <td></td>
+                {% endif %}
+                {% if flight.total != None %}
                 <td>{{flight.total}}</td>
+                {% else %}
+                <td></td>
+                {% endif %}
+                {% if flight.night != None %}
                 <td>{{flight.night}}</td>
+                {% else %}
+                <td></td>
+                {% endif %}
+                {% if flight.imc != None %}
                 <td>{{flight.imc}}</td>
+                {% else %}
+                <td></td>
+                {% endif %}
+                {% if flight.pilotflying != None %}
                 <td>{{flight.pilotflying}}</td>
+                {% else %}
+                <td></td>
+                {% endif %}
+                {% if flight.approachtype != None %}
                 <td>{{flight.approachtype}}</td>
+                {% else %}
+                <td></td>
+                {% endif %}
+                {% if flight.dayt_o != None %}
                 <td>{{flight.dayt_o}}</td>
+                {% else %}
+                <td></td>
+                {% endif %}
+                {% if flight.dayldg != None %}
                 <td>{{flight.dayldg}}</td>
+                {% else %}
+                <td></td>
+                {% endif %}
+                {% if flight.nightt_o != None %}
                 <td>{{flight.nightt_o}}</td>
+                {% else %}
+                <td></td>
+                {% endif %}
+                {% if flight.nightldg != None %}
                 <td>{{flight.nightldg}}</td>
+                {% else %}
+                <td></td>
+                {% endif %}
+                {% if flight.remarks != None %}
                 <td>{{flight.remarks}}</td>
+                {% else %}
+                <td></td>
+                {% endif %}
+                <td><a href="{% url 'delete-flight' flightid=flight.flightid%}"><i class="fa-sharp fa-solid fa-trash" onclick="return confirm('Are you sure you want to delete this item?')"></i></a></td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
 </div>
 {% block script %}
+<script>
+    function updateRow(id){
+        document.location.href = "/update-flight/" + id  
+    }
+</script>
 {% endblock script %}
