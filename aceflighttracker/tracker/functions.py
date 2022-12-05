@@ -32,3 +32,9 @@ def int_to_time(i):
         else:
             time = (f"{string[0]}{string[1]}:{string[2]}{string[3]}")
         return(time)
+def check_null(value):
+    if value == '' or value == 'None':
+        value = None
+        return value
+    else:
+        return value

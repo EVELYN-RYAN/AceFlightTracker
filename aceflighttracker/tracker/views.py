@@ -12,14 +12,24 @@ from .functions import *
 # Create your views here.
 def indexPageView(request):
     flight = Flight.objects.all().order_by('-flightid')
+    n = datetime.now()
+    m = int(n.strftime('%m'))
+    y = int(n.strftime('%Y'))
+    monthHours = 0
+    for r in flight:
+        d = datetime.strptime(r.date,'%m/%d/%y')
+        if r.total is not None:
+            if d >= datetime(y,m,1):
+                monthHours += r.total
     context ={
-        'flight': flight
+        'flight': flight,
+        'monthHours': monthHours
     }
     return render(request, 'aceflighttracker/index.html',context)
 
 def incompletePageView(request):
     incomplete_list = Flight.objects.all()
-    incomplete_list = Flight.objects.filter(from_field= None, to = None)
+    incomplete_list = Flight.objects.filter(from_field=None, to=None)
     context ={
         'flight': incomplete_list
     }
@@ -47,7 +57,7 @@ def registerPageView(request):
 def entriesPageView(request):
     flight = Flight.objects.all().order_by('-flightid')
     context = {
-        'flight': flight
+        'flight': flight,
     }
     return render(request,'aceflighttracker/entries.html',context)
 
@@ -73,7 +83,7 @@ def newflight(request):
     n = datetime.now()
     new.date = n.strftime("%m/%d/%y")
     new.save()
-    new.date = n.strftime("%Y-%d-%m")
+    new.date = n.strftime("%Y-%m-%d")
     # new.out = n.strftime("%HH:%MM")
     context = {
         'new': new
@@ -89,9 +99,9 @@ def updateflight(request, flightid):
         flight.date = date.strftime("%m/%d/%y")
         flight.days = string_to_int(r.get('days'))
         flight.flightnum = string_to_int(r.get('flightnum'))
-        flight.aircraftid = r.get('aircraftid')
-        flight.from_field = r.get('from_field')
-        flight.to = r.get('to')
+        flight.aircraftid = check_null(r.get('aircraftid'))
+        flight.from_field = check_null(r.get('from_field'))
+        flight.to = check_null(r.get('to'))
         flight.out = time_to_integer(r.get('out'))
         flight.off = time_to_integer(r.get('off'))
         flight.on = time_to_integer(r.get('on'))
@@ -101,12 +111,12 @@ def updateflight(request, flightid):
         flight.night = string_to_float(r.get('night'))
         flight.imc = string_to_float(r.get('imc'))
         flight.pilotflying = int(r.get('pilotflying'))
-        flight.approachtype = r.get('approachtype')
+        flight.approachtype = check_null(r.get('approachtype'))
         flight.dayt_o = int(r.get('dayt_o'))
         flight.dayldg = int(r.get('dayldg'))
         flight.nightt_o = int(r.get('nightt_o'))
         flight.nightldg = int(r.get('nightldg'))
-        flight.remarks = r.get('remarksflight')
+        flight.remarks = check_null(r.get('remarksflight'))
         flight.save()
 
         if 'save' in r:
@@ -114,11 +124,11 @@ def updateflight(request, flightid):
             request.method = 'GET'
             return updateflight(request,flightid)
         else:
-            return render(request,'aceflighttracker/submitted.html')
+            return indexPageView(request)
     if request.method == 'GET':
         flight = Flight.objects.get(flightid=flightid)
         d = datetime.strptime(flight.date,"%m/%d/%y")
-        flight.date = d.strftime("%Y-%d-%m")
+        flight.date = d.strftime("%Y-%m-%d")
         flight.out = int_to_time(flight.out)
         flight.off = int_to_time(flight.off)
         flight.on = int_to_time(flight.on)
