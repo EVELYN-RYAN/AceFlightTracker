@@ -1,0 +1,83 @@
+<div class="card-header">
+    <i class="fas fa-table me-1"></i>
+    DataTable Example
+</div>
+<div class="card-body">
+    <table id="datatablesSimple">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Date</th>
+                <th>FlightNum</th>
+                <th>FlightNum</th>
+                <th>From</th>
+                <th>To</th>
+                <th>Out</th>
+                <th>Off</th>
+                <th>On</th>
+                <th>In</th>
+                <th>TOTAL</th>
+                <th>Night</th>
+                <th>IMC</th>
+                <th>Pilot Flying</th>
+                <th>Approach Type</th>
+                <th>Day T/O</th>
+                <th>Day Ldg</th>
+                <th>Night T/O</th>
+                <th>Night Ldg</th>
+                <th>Remarks</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <th>Date</th>
+                <th>Date</th>
+                <th>FlightNum</th>
+                <th>FlightNum</th>
+                <th>From</th>
+                <th>To</th>
+                <th>Out</th>
+                <th>Off</th>
+                <th>On</th>
+                <th>In</th>
+                <th>TOTAL</th>
+                <th>Night</th>
+                <th>IMC</th>
+                <th>Pilot Flying</th>
+                <th>Approach Type</th>
+                <th>Day T/O</th>
+                <th>Day Ldg</th>
+                <th>Night T/O</th>
+                <th>Night Ldg</th>
+                <th>Remarks</th>
+            </tr>
+        </tfoot>
+        <tbody>
+            {% for flight in flight %}
+            <tr>
+                {% comment %} <td sty>{{flight.flightid}}</td> {% endcomment %}
+                <td>{{flight.date}}</td>
+                <td>{{flight.days}}</td>
+                <td>{{flight.flightnum}}</td>
+                <td>{{flight.aircraftid}}</td>
+                <td>{{flight.from_field}}</td>
+                <td>{{flight.to}}</td>
+                <td>{{flight.out}}</td>
+                <td>{{flight.off}}</td>
+                <td>{{flight.on}}</td>
+                <td>{{flight.in_field}}</td>
+                <td>{{flight.total}}</td>
+                <td>{{flight.night}}</td>
+                <td>{{flight.imc}}</td>
+                <td>{{flight.pilotflying}}</td>
+                <td>{{flight.approachtype}}</td>
+                <td>{{flight.dayt_o}}</td>
+                <td>{{flight.dayldg}}</td>
+                <td>{{flight.nightt_o}}</td>
+                <td>{{flight.nightldg}}</td>
+                <td>{{flight.remarks}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
