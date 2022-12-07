@@ -15,6 +15,9 @@
         <a href={% url 'export_csv' %} class="page-btn top"> 
             <span>Export Table</span>
         </a>
+        <a class='page-btn' href={% url 'import_csv'%}>
+            <p>Import Table</p>
+        </a>
         <div class="card mb-4">
             {% include 'components/table.html' with data=flight %}
         </div>

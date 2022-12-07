@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import TemplateView, DetailView
 from .models import Flight
 from datetime import datetime
@@ -7,7 +7,8 @@ from django.views.decorators.csrf import csrf_protect
 from django.urls import reverse
 import csv
 from .functions import *
-
+import sqlite3
+from .importCsv import *
 
 # Create your views here.
 def indexPageView(request):
@@ -72,6 +73,13 @@ def export_csv(request):
     for f in fields:
         writer.writerow(f)
     return r
+
+#Import csv
+def import_csv(request):
+    importCSVfile()
+    return redirect(entriesPageView)
+    
+
 
 def chartsPageView(request):
     return render(request,'aceflighttracker/charts.html')
