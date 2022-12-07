@@ -16,5 +16,6 @@ urlpatterns = [
     path("entries", entriesPageView, name="entries"),
     path("register", registerPageView, name="register"),
     path("export_csv", export_csv, name="export_csv"),
+    path("import_csv", import_csv, name='import_csv'),
 ]                  
             
