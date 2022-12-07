@@ -54,7 +54,17 @@
             </div>
             <div class="col-xl-6">
                 <div class="card mb-4">
-                    {% include 'components/lineChart.html' with graphtitle="Hours Over Month" graphtype="line" %}
+                    <div class="card-header">
+                        Date of Last Flight Logged
+                    </div>
+                    <div class="card-body">
+                        <div class="progress">
+                            <br>
+                            <div class="progress-bar" role="progressbar" style="width: {{monthHours}}%" aria-valuenow="{{monthHours}}" aria-valuemin="0" aria-valuemax="170">{{monthHours}} Hrs</div>
+                            
+                        </div>
+                    </div>
+                    {% comment %} {% include 'components/lineChart.html' with graphtitle="Hours Over Month" graphtype="line" %} {% endcomment %}
                 </div>
             </div>
         </div>
